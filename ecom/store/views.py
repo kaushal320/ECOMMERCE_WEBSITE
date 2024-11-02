@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from .models import Product
+from .models import Product,Category
 # Create your views here.
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
@@ -60,4 +60,20 @@ def register_user(request):
 def product(request,pk):
     product=Product.objects.get(id=pk)
     return render(request,'product.html',{'product':product})
+
+def category(request,foo):
+    foo=foo.replace('-',' ')
+    #grab cateogry from url
+    try:
+        #look up the category from the url
+        category=Category.objects.get(name=foo)
+        product=Product.objects.filter(Category=category)
+        return render(request,'category.html',{'products':product,'category':category})
+
+
+
+    except:
+        messages.success(request,"Categories doesnt exist")
+        return redirect('home')
+
 
