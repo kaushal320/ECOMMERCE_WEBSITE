@@ -26,14 +26,27 @@
                             <div class="bi-star-fill"></div>
                             <div class="bi-star-fill"></div>
                         </div>
+                        
                            <!-- Product price-->
                            <strike>${{product.Price}}</strike> &nbsp; ${{product.sale_price}}
 
                            {% else %}
+                           
+
                            ${{product.Price}}
                           {% endif %}
+
+
                           <br><br>
+                          
+                          <select class="form-select" >
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                          </select>
+
                           <a href="{% url "home" %}" class="btn btn-secondary">Go back</a>
+                          <button type="button" value="{{product.id}}" id="add-cart" class="btn btn-secondary">Add to Cart</button>
                       
                         </div>
                       </div>
@@ -46,5 +59,28 @@
 
 <br><br><br><br><br><br><br><br><br>
 
+<script>
+  //Check if button pressed
+  $(document).on('click','#add-cart',function(e){
+    e.preventDefault();
+    $.ajax({
+      type:'POST',
+      url:'{% url "cart_add" %}',
+      data:{
+        product_id:$('#add-cart').val(),
+        csrfmiddlewaretoken:'{{ csrf_token }}',
+        action:'post'
+      },
+      success:function(json){
+        //console.log(json)
+        document.getElementById("card_quantity").textContent=json.qty
+      },
+      error:function (xhr,errmsg,err){
 
+      }
+
+
+    });
+  })
+</script>
 {% endblock content %}
