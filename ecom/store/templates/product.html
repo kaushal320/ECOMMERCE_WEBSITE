@@ -31,9 +31,20 @@
                            <strike>${{product.Price}}</strike> &nbsp; ${{product.sale_price}}
 
                            {% else %}
+                           
+
                            ${{product.Price}}
                           {% endif %}
+
+
                           <br><br>
+                          
+                          <select class="form-select" >
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                          </select>
+
                           <a href="{% url "home" %}" class="btn btn-secondary">Go back</a>
                           <button type="button" value="{{product.id}}" id="add-cart" class="btn btn-secondary">Add to Cart</button>
                       
